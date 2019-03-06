@@ -147,9 +147,16 @@
           if (!$("#tabela2 tbody tr").length > 0) {
             $("#tabela1 tbody tr td :checked").insertRows("#tabela2", e.table2);
           }
+
+          if($("#tabela1 tr").find("td:nth-child(2)").has('div').length === 0){
+            $("#tabela1").find("td:nth-child(2)").first().createDropdown(modelDropdown);
+          } else {
+            $("#tabela1 tr").next().find("td:nth-child(2)").last().createDropdown(modelDropdown);
+          }
         });
 
-        $("#tabela1").find("td:nth-child(2)").createDropdown(modelDropdown, 2);
+        // $("#tabela1").find("td:nth-child(2)").createDropdown(modelDropdown, 2);
+        $("#tabela1").find("td:nth-child(2)").first().createInput({ type: 'email', placeholder: 'teste', id: 1, value: 'mss@mss.com'} );
 
         $("#tabela1 tbody tr")
           .find(":radio")
