@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.CSS"
+    />
+    <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
+    <script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <!-- <script src="dropdown.js"></script> -->
+    <script src="pluginsMSS.js"></script>
+    <script src="controller.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <div id="teste" class="table-responsive"></div>
+
+      <table class="table" id="tabela1">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col" style="width: 120px">Tipo</th>
+            <th scope="col">Nome</th>
+            <th scope="col">Idade</th>
+            <th scope="col">Sexo</th>
+            <th scope="col">Status</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+
+      <table class="table" id="tabela2">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nome</th>
+            <th scope="col">Idade</th>
+            <th scope="col">Sexo</th>
+            <th scope="col">Status</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <script>
+      $(function() {
+        // var model = [
+        //   { nome: "Marcelo", idade: 35, sexo: "Masculino", on: true },
+        //   { nome: "Vanessa", idade: 32, sexo: "Feminino", on: true },
+        //   { nome: "Thomas", idade: 1, sexo: "Masculino", on: false },
+        //   { nome: "Jairo", idade: 34, sexo: "Masculino", on: false },
+        //   { nome: "Tamires", idade: 30, sexo: "Feminino", on: false },
+        //   { nome: "Misse", idade: 40, sexo: "Feminino", on: false },
+        //   { nome: "Jurandir", idade: 69, sexo: "Masculino", on: false },
+        //   { nome: "Inês", idade: 59, sexo: "Feminino", on: false },
+        //   { nome: "Lourdes", idade: 59, sexo: "Feminino", on: false }
+        // ];
+
+        var model = [
+          {
+            table1: [
+              {
+                tipo: "",
+                nome: "Marcelo",
+                idade: 35,
+                sexo: "Masculino",
+                on: true
+              }
+            ],
+            table2: [
+              { nome: "Vanessa", idade: 32, sexo: "Feminino", on: true },
+              { nome: "Thomas", idade: 1, sexo: "Masculino", on: true }
+            ]
+          },
+          {
+            table1: [
+              {
+                tipo: "",
+                nome: "Marcelo Silva",
+                idade: 35,
+                sexo: "Masculino",
+                on: false
+              }
+            ],
+            table2: [
+              { nome: "Marcelo", idade: 35, sexo: "Masculino", on: true },
+              { nome: "Marcelo", idade: 35, sexo: "Masculino", on: true },
+              { nome: "Marcelo", idade: 35, sexo: "Masculino", on: true },
+              { nome: "Marcelo", idade: 35, sexo: "Masculino", on: true }
+            ]
+          },
+          {
+            table1: [
+              {
+                tipo: "",
+                nome: "MSS",
+                idade: 35,
+                sexo: "Masculino",
+                on: false
+              }
+            ],
+            table2: [
+              { nome: "Marcelo", idade: 35, sexo: "Masculino", on: true },
+              { nome: "Marcelo", idade: 35, sexo: "Masculino", on: true },
+              { nome: "Marcelo", idade: 35, sexo: "Masculino", on: true }
+            ]
+          }
+        ];
+
+        var modelDropdown = [
+          { id: 1, label: "Boleto" },
+          { id: 2, label: "Débito" },
+          { id: 3, label: "Depósito" }
+        ];
+
+        // $("#grid")
+        //   .find("tbody")
+        //   .find("tr")
+        //   .each(function(index, e) {
+        //     $(this)
+        //       .find("td:nth-child(2)")
+        //       .mydropdown(modelDropdown, 2);
+        //     $(this)
+        //       .find("button")
+        //       .attr("disabled", true);
+        //   });
+
+        //$("p").mydropdown(modelDropdown);
+
+        model.forEach(function(e, i) {
+          $("#tabela1").insertRows("#tabela1", e.table1, e.table2);
+
+          if (!$("#tabela1 tbody tr td :radio").is(":checked")) {
+            $("#tabela1 tbody tr td:first-child :radio").prop("checked", true);
+          }
+
+          if (!$("#tabela2 tbody tr").length > 0) {
+            $("#tabela1 tbody tr td :checked").insertRows("#tabela2", e.table2);
+          }
+        });
+
+        $("#tabela1").find("td:nth-child(2)").createDropdown(modelDropdown, 2);
+
+        $("#tabela1 tbody tr")
+          .find(":radio")
+          .click(function(e) {
+            $("#tabela2 tbody tr").remove();
+            $(this).insertRows(
+              "#tabela2",
+              $(this)
+                .parents("tr")
+                .data().dataTr
+            );
+          });
+
+        // $("#tabela2").insertRows("#tabela2", model.list);
+        // $("#teste2").click(function(){
+        //   $(this).removeRows("#minha-tabela");
+        // });
+
+        // freeze("#grid");
+      });
+    </script>
+  </body>
+</html>
