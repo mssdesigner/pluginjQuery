@@ -142,3 +142,17 @@ function updateLabel(e, selected) {
     }
   }
 }
+
+function ajaxCenter(url, parameter, asynchronous, typeRequest){
+
+    return $.ajax({
+        url: url,
+        contentType: 'application/json',
+        data: typeRequest === "POST" ? JSON.stringify(parameter) : parameter,
+        dataType: 'json',
+        async: asynchronous,
+        cache: false,
+        type: typeRequest
+        
+    });
+}
