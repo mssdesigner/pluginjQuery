@@ -169,6 +169,12 @@
                 .data().dataTr
             );
           });
+        
+        var res = ajaxCenter("https://httpbin.org/post", [ {nome: 'Marcelo'}, {idade: 'Marcelo'} ], true, "POST");
+
+        res.then(function(response){
+          console.log(response);
+        });
 
         // $("#tabela2").insertRows("#tabela2", model.list);
         // $("#teste2").click(function(){
